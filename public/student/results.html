@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Results — ExamFlow</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/student.css"/>
+</head>
+<body>
+<div class="student-layout">
+  <nav class="student-nav">
+    <a class="student-nav-brand" href="/student/dashboard.html">
+      <div class="student-nav-logo">🎯</div>
+      <h3>ExamFlow</h3>
+    </a>
+    <div class="student-nav-right">
+      <a href="/student/dashboard.html" class="btn btn-secondary btn-sm">← Back to Dashboard</a>
+      <button class="btn btn-ghost btn-sm" id="logout-btn">🚪</button>
+    </div>
+  </nav>
+
+  <!-- Results Hero -->
+  <div class="results-hero" id="results-hero">
+    <div class="empty-state"><div class="spinner"></div><p class="mt-2">Loading results...</p></div>
+  </div>
+
+  <!-- Feedback Section -->
+  <div class="results-body" id="results-body" style="display:none">
+    <div class="flex justify-between items-center mb-4">
+      <h2 style="font-size:1.15rem">Answer Breakdown</h2>
+      <div class="flex gap-3">
+        <div class="flex items-center gap-2 text-sm text-muted">
+          <div style="width:12px;height:12px;border-radius:3px;border-left:4px solid var(--success)"></div> Correct
+        </div>
+        <div class="flex items-center gap-2 text-sm text-muted">
+          <div style="width:12px;height:12px;border-radius:3px;border-left:4px solid var(--danger)"></div> Incorrect
+        </div>
+        <div class="flex items-center gap-2 text-sm text-muted">
+          <div style="width:12px;height:12px;border-radius:3px;border-left:4px solid var(--text-muted)"></div> Skipped
+        </div>
+      </div>
+    </div>
+    <div id="feedback-list"></div>
+
+    <div class="text-center mt-4">
+      <a href="/student/dashboard.html" class="btn btn-primary btn-lg">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/student/results.js"></script>
+</body>
+</html>

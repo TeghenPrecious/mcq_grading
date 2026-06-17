@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — ExamFlow</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+</head>
+<body>
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">🎯</div>
+      <div class="sidebar-brand-text">
+        <h3>ExamFlow</h3>
+        <span>Admin Panel</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item active">
+        <span class="nav-item-icon">📊</span> Dashboard
+      </a>
+      <a href="/admin/tests.html" class="nav-item">
+        <span class="nav-item-icon">📝</span> Manage Tests
+      </a>
+      <a href="/admin/grades.html" class="nav-item">
+        <span class="nav-item-icon">🏆</span> Grades
+      </a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-initial">A</div>
+      <div class="sidebar-user-info">
+        <h4 id="user-name">Admin</h4>
+        <span id="user-email">admin@examflow.com</span>
+      </div>
+      <button class="sidebar-logout-btn" id="logout-btn" title="Logout">🚪</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">
+        <h2>Dashboard</h2>
+        <p>Overview of ExamFlow activity</p>
+      </div>
+      <div class="topbar-actions">
+        <a href="/admin/tests.html" class="btn btn-primary btn-sm">+ New Test</a>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Stats Grid -->
+      <div class="grid grid-4 mb-4" id="stats-grid">
+        <div class="stat-card" style="--stat-color:#6366F1;--stat-rgb:99,102,241">
+          <div class="stat-icon" style="background:rgba(99,102,241,0.15)">📝</div>
+          <div class="stat-value" id="stat-tests">—</div>
+          <div class="stat-label">Total Tests</div>
+        </div>
+        <div class="stat-card" style="--stat-color:#10B981;--stat-rgb:16,185,129">
+          <div class="stat-icon" style="background:rgba(16,185,129,0.15)">🎓</div>
+          <div class="stat-value" id="stat-students">—</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat-card" style="--stat-color:#06B6D4;--stat-rgb:6,182,212">
+          <div class="stat-icon" style="background:rgba(6,182,212,0.15)">✅</div>
+          <div class="stat-value" id="stat-attempts">—</div>
+          <div class="stat-label">Completed Attempts</div>
+        </div>
+        <div class="stat-card" style="--stat-color:#F59E0B;--stat-rgb:245,158,11">
+          <div class="stat-icon" style="background:rgba(245,158,11,0.15)">📈</div>
+          <div class="stat-value" id="stat-avg">—</div>
+          <div class="stat-label">Avg. Score</div>
+        </div>
+      </div>
+
+      <!-- Recent Grades -->
+      <div class="card">
+        <div class="card-header flex justify-between items-center">
+          <div>
+            <h3>Recent Submissions</h3>
+            <p class="text-sm text-muted mt-1">Latest completed exam attempts</p>
+          </div>
+          <a href="/admin/grades.html" class="btn btn-secondary btn-sm">View All →</a>
+        </div>
+        <div id="recent-grades-content">
+          <div class="empty-state">
+            <div class="spinner"></div>
+            <p class="mt-2">Loading...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin/dashboard.js"></script>
+</body>
+</html>

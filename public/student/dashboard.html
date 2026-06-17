@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Exams — ExamFlow</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/student.css"/>
+</head>
+<body>
+<div class="student-layout">
+  <!-- Navbar -->
+  <nav class="student-nav">
+    <a class="student-nav-brand" href="/student/dashboard.html">
+      <div class="student-nav-logo">🎯</div>
+      <h3>ExamFlow</h3>
+    </a>
+    <div class="student-nav-right">
+      <div class="student-nav-user">
+        <div class="student-nav-avatar" id="user-initial">S</div>
+        <span id="user-name" style="font-size:0.9rem;font-weight:600">Student</span>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="logout-btn">🚪 Logout</button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="student-main">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <h1 id="welcome-msg">Available Exams</h1>
+        <p class="text-muted mt-1">Select a test to begin. Each test can only be taken once.</p>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="flex gap-3 mb-4" style="flex-wrap:wrap">
+      <div class="flex items-center gap-2 text-sm text-muted">
+        <div style="width:12px;height:12px;border-radius:3px;background:var(--primary)"></div> Available
+      </div>
+      <div class="flex items-center gap-2 text-sm text-muted">
+        <div style="width:12px;height:12px;border-radius:3px;background:var(--warning)"></div> In Progress
+      </div>
+      <div class="flex items-center gap-2 text-sm text-muted">
+        <div style="width:12px;height:12px;border-radius:3px;background:var(--success)"></div> Completed
+      </div>
+    </div>
+
+    <div id="tests-container">
+      <div class="empty-state"><div class="spinner"></div><p class="mt-2">Loading tests...</p></div>
+    </div>
+
+    <!-- My Results -->
+    <div style="margin-top:40px">
+      <h2 style="font-size:1.2rem;margin-bottom:16px">📋 My Results</h2>
+      <div id="results-container">
+        <div class="card">
+          <div class="empty-state" style="padding:32px">
+            <div class="empty-state-icon">📊</div>
+            <h3>No results yet</h3>
+            <p>Complete a test to see your results here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/student/dashboard.js"></script>
+</body>
+</html>

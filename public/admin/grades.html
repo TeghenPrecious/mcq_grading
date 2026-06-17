@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grades — ExamFlow</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">🎯</div>
+      <div class="sidebar-brand-text"><h3>ExamFlow</h3><span>Admin Panel</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="nav-item-icon">📊</span> Dashboard</a>
+      <a href="/admin/tests.html" class="nav-item"><span class="nav-item-icon">📝</span> Manage Tests</a>
+      <a href="/admin/grades.html" class="nav-item active"><span class="nav-item-icon">🏆</span> Grades</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-initial">A</div>
+      <div class="sidebar-user-info">
+        <h4 id="user-name">Admin</h4>
+        <span id="user-email">—</span>
+      </div>
+      <button class="sidebar-logout-btn" id="logout-btn" title="Logout">🚪</button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">
+        <h2>Grades</h2>
+        <p>Student exam results and performance</p>
+      </div>
+      <div class="topbar-actions">
+        <select class="form-select" id="test-filter" style="width:220px">
+          <option value="">All Tests</option>
+        </select>
+        <button class="btn btn-primary" id="export-btn">📄 Export PDF</button>
+      </div>
+    </div>
+    <div class="page-content">
+      <div id="alert-container"></div>
+      <!-- Summary Stats -->
+      <div class="grid grid-3 mb-4" id="grade-stats" style="display:none">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(99,102,241,0.15)">👥</div>
+          <div class="stat-value" id="gs-students">0</div>
+          <div class="stat-label">Students Attempted</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(16,185,129,0.15)">✅</div>
+          <div class="stat-value" id="gs-avg">0%</div>
+          <div class="stat-label">Average Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(245,158,11,0.15)">🏆</div>
+          <div class="stat-value" id="gs-high">0%</div>
+          <div class="stat-label">Highest Score</div>
+        </div>
+      </div>
+      <div class="card">
+        <div id="grades-container">
+          <div class="empty-state"><div class="spinner"></div><p class="mt-2">Loading...</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin/grades.js"></script>
+</body>
+</html>

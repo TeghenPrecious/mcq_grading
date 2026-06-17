@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Tests — ExamFlow</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/admin.css"/>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">🎯</div>
+      <div class="sidebar-brand-text"><h3>ExamFlow</h3><span>Admin Panel</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="/admin/dashboard.html" class="nav-item"><span class="nav-item-icon">📊</span> Dashboard</a>
+      <a href="/admin/tests.html" class="nav-item active"><span class="nav-item-icon">📝</span> Manage Tests</a>
+      <a href="/admin/grades.html" class="nav-item"><span class="nav-item-icon">🏆</span> Grades</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="user-initial">A</div>
+      <div class="sidebar-user-info">
+        <h4 id="user-name">Admin</h4>
+        <span id="user-email">—</span>
+      </div>
+      <button class="sidebar-logout-btn" id="logout-btn" title="Logout">🚪</button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">
+        <h2>Manage Tests</h2>
+        <p>Create, edit and manage your MCQ tests</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" id="create-test-btn">+ Create Test</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div id="alert-container"></div>
+      <div id="tests-container">
+        <div class="empty-state"><div class="spinner"></div><p class="mt-2">Loading tests...</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create/Edit Test Modal -->
+<div id="test-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Create New Test</h3>
+      <button class="modal-close" id="close-test-modal">✕</button>
+    </div>
+    <div id="modal-alert"></div>
+    <form id="test-form">
+      <input type="hidden" id="test-id"/>
+      <div class="form-group">
+        <label class="form-label">Test Title *</label>
+        <input class="form-input" type="text" id="test-title" placeholder="e.g. Biology Chapter 1" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="test-desc" placeholder="Brief description of this test..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Time Limit (minutes)</label>
+        <input class="form-input" type="number" id="test-time" placeholder="Leave empty for no limit" min="1" max="300"/>
+      </div>
+      <div class="flex gap-3 mt-4">
+        <button type="button" class="btn btn-secondary" id="cancel-test-btn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="save-test-btn" style="flex:1">Save Test</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Questions Modal -->
+<div id="questions-modal" class="modal-overlay hidden">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-header">
+      <div>
+        <h3 id="q-modal-title">Questions</h3>
+        <p class="text-sm text-muted" id="q-modal-subtitle"></p>
+      </div>
+      <button class="modal-close" id="close-q-modal">✕</button>
+    </div>
+    <div id="q-modal-alert"></div>
+    <div id="questions-list" style="max-height:340px;overflow-y:auto;margin-bottom:20px"></div>
+    <div style="border-top:1px solid var(--border);padding-top:20px">
+      <h4 style="margin-bottom:16px">Add New Question</h4>
+      <form id="question-form">
+        <input type="hidden" id="q-test-id"/>
+        <div class="form-group">
+          <label class="form-label">Question *</label>
+          <textarea class="form-textarea" id="q-text" placeholder="Enter the question text" style="min-height:60px" required></textarea>
+        </div>
+        <div class="grid grid-2" style="gap:10px">
+          <div class="form-group" style="margin-bottom:10px">
+            <label class="form-label">Option A *</label>
+            <input class="form-input" type="text" id="q-opt-a" required/>
+          </div>
+          <div class="form-group" style="margin-bottom:10px">
+            <label class="form-label">Option B *</label>
+            <input class="form-input" type="text" id="q-opt-b" required/>
+          </div>
+          <div class="form-group" style="margin-bottom:10px">
+            <label class="form-label">Option C *</label>
+            <input class="form-input" type="text" id="q-opt-c" required/>
+          </div>
+          <div class="form-group" style="margin-bottom:10px">
+            <label class="form-label">Option D *</label>
+            <input class="form-input" type="text" id="q-opt-d" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correct Answer *</label>
+          <select class="form-select" id="q-correct" required>
+            <option value="">Select correct option</option>
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="add-q-btn">Add Question</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div id="delete-modal" class="modal-overlay hidden">
+  <div class="modal" style="max-width:400px;text-align:center">
+    <div style="font-size:3rem;margin-bottom:16px">🗑️</div>
+    <h3 id="delete-modal-title">Delete Test?</h3>
+    <p class="text-secondary mt-2 mb-4" id="delete-modal-msg">This action cannot be undone.</p>
+    <div class="flex gap-3">
+      <button class="btn btn-secondary" style="flex:1" id="cancel-delete-btn">Cancel</button>
+      <button class="btn btn-danger" style="flex:1" id="confirm-delete-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin/tests.js"></script>
+</body>
+</html>

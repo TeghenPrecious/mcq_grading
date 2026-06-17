@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam — ExamFlow</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/student.css"/>
+</head>
+<body>
+<div class="exam-layout">
+  <!-- Exam Header -->
+  <header class="exam-header">
+    <div class="exam-header-info">
+      <div class="exam-title" id="exam-title">Loading exam...</div>
+      <div class="exam-subtitle" id="exam-subtitle"></div>
+    </div>
+    <div class="exam-progress-section">
+      <div class="exam-progress-label">
+        <span id="progress-label">Question 1 of —</span>
+        <span id="answered-count">0 answered</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="exam-timer hidden" id="timer-display">
+      <span>⏱️</span>
+      <span id="timer-text">--:--</span>
+    </div>
+  </header>
+
+  <!-- Exam Body -->
+  <div class="exam-body">
+    <!-- Question Number Sidebar -->
+    <aside class="question-sidebar">
+      <h4>Questions</h4>
+      <div class="q-grid" id="q-grid"></div>
+    </aside>
+
+    <!-- Question Main -->
+    <div class="question-main" id="question-main">
+      <div class="empty-state"><div class="spinner"></div><p class="mt-2">Loading exam...</p></div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="exam-navigation">
+    <button class="btn btn-secondary" id="prev-btn" disabled>← Previous</button>
+    <div class="exam-nav-center" id="nav-center"></div>
+    <div class="flex gap-3">
+      <button class="btn btn-secondary" id="next-btn">Next →</button>
+      <button class="btn btn-primary" id="submit-btn" style="display:none">Submit Exam ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Confirmation Modal -->
+<div id="submit-modal" class="modal-overlay hidden">
+  <div class="modal" style="max-width:440px;text-align:center">
+    <div style="font-size:3rem;margin-bottom:16px">📤</div>
+    <h3>Submit Exam?</h3>
+    <p class="text-secondary mt-2 mb-2">You're about to submit your answers.</p>
+    <div id="unanswered-warning" class="alert alert-info mt-2 mb-4" style="text-align:left"></div>
+    <div class="flex gap-3">
+      <button class="btn btn-secondary" style="flex:1" id="cancel-submit-btn">Continue Exam</button>
+      <button class="btn btn-primary" style="flex:1" id="confirm-submit-btn">Submit Now</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/student/test.js"></script>
+</body>
+</html>

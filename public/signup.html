@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account — ExamFlow</title>
+  <meta name="description" content="Create your ExamFlow account to start taking or administering exams."/>
+  <link rel="stylesheet" href="/css/main.css"/>
+  <link rel="stylesheet" href="/css/auth.css"/>
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Left Panel -->
+    <div class="auth-left">
+      <div class="auth-brand">
+        <div class="auth-brand-logo">🎯</div>
+        <h1 class="gradient-text">ExamFlow</h1>
+        <p>Join ExamFlow to experience smart, automated MCQ assessment.</p>
+      </div>
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon" style="background:rgba(99,102,241,0.15)">🎓</div>
+          <div>
+            <h4>Student Account</h4>
+            <p>Register without a code to take exams</p>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon" style="background:rgba(139,92,246,0.15)">🛡️</div>
+          <div>
+            <h4>Admin Account</h4>
+            <p>Use the admin code to manage tests and grades</p>
+          </div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon" style="background:rgba(6,182,212,0.15)">🔒</div>
+          <div>
+            <h4>Secure & Private</h4>
+            <p>Your data is encrypted and protected</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel (Signup Form) -->
+    <div class="auth-right">
+      <div class="auth-form-header">
+        <h2>Create account ✨</h2>
+        <p>Fill in your details to get started</p>
+      </div>
+
+      <div id="alert-container"></div>
+
+      <form id="signup-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="signup-name">Full Name</label>
+          <input class="form-input" type="text" id="signup-name" placeholder="Your full name" required autocomplete="name"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signup-email">Email Address</label>
+          <input class="form-input" type="email" id="signup-email" placeholder="you@example.com" required autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="signup-password">Password</label>
+          <div class="input-group">
+            <input class="form-input" type="password" id="signup-password" placeholder="At least 6 characters" required autocomplete="new-password"/>
+            <button type="button" class="input-toggle-btn" id="toggle-pw" aria-label="Toggle password">👁️</button>
+          </div>
+        </div>
+
+        <label class="admin-code-toggle" for="admin-toggle">
+          <input type="checkbox" id="admin-toggle"/>
+          I have an admin registration code
+        </label>
+        <div id="admin-code-section" class="admin-code-section hidden">
+          <div class="form-group">
+            <label class="form-label" for="signup-admin-code">Admin Code</label>
+            <input class="form-input" type="password" id="signup-admin-code" placeholder="Enter the admin code"/>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg" type="submit" id="signup-btn">
+          Create Account
+        </button>
+      </form>
+
+      <div class="auth-form-footer">
+        Already have an account? <a href="/">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    Auth.redirectIfLoggedIn();
+
+    document.getElementById('toggle-pw').addEventListener('click', () => {
+      const pw = document.getElementById('signup-password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('admin-toggle').addEventListener('change', (e) => {
+      document.getElementById('admin-code-section').classList.toggle('hidden', !e.target.checked);
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const adminCode = document.getElementById('signup-admin-code').value.trim();
+
+      if (!name || !email || !password) return showAlert('alert-container', 'Please fill in all required fields.');
+      if (password.length < 6) return showAlert('alert-container', 'Password must be at least 6 characters.');
+
+      setLoading('signup-btn', true, 'Creating account...');
+      try {
+        const data = await api.post('/auth/signup', { name, email, password, adminCode: adminCode || undefined });
+        Auth.save(data.token, data.user);
+        showAlert('alert-container', `Welcome, ${data.user.name}! Redirecting...`, 'success');
+        setTimeout(() => {
+          window.location.href = data.user.role === 'admin' ? '/admin/dashboard.html' : '/student/dashboard.html';
+        }, 800);
+      } catch (err) {
+        showAlert('alert-container', err.message || 'Signup failed. Please try again.');
+        setLoading('signup-btn', false, 'Create Account');
+      }
+    });
+  </script>
+</body>
+</html>
