@@ -22,3 +22,9 @@
     "node": ">=18.0.0"
   }
 }
+
+"scripts": {
+  "dev": "next dev",
+  "build": "next build", 
+  "start": "next start"
+}
